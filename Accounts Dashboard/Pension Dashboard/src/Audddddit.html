@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel Data Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="myBarChart" width="800" height="400"></canvas>
+
+  <script>
+    const fetchData = async () => {
+      const response = await fetch('./Depart.xlsx');
+      const arrayBuffer = await response.arrayBuffer();
+      const data = new Uint8Array(arrayBuffer);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
+      const sheet = workbook.Sheets[sheetName];
+      const excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      return excelData;
+    };
+
+    fetchData().then((excelData) => {
+      const labels = excelData[0].slice(1); // Assuming the first row contains labels for the X-axis
+      const datasets = excelData.slice(1).map((row, index) => ({
+        label: row[0], // Assuming the first column contains labels for each dataset
+        data: row.slice(1).map(Number),
+        backgroundColor: rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2),
+        borderColor: rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1),
+        borderWidth: 1,
+      }));
+
+      const ctx = document.getElementById('myBarChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets,
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    });
+  </script>
+</body>
+
+</html>

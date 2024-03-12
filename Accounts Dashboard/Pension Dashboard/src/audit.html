@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Bar Graph with Multiple Datasets</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <canvas id="myChart" width="600" height="400"></canvas>
+
+    <script>
+        // Sample data with multiple datasets
+        const data = {
+            labels: ["Elect", "mech", "TRD", "Signal","Eng","Accounts","Comm.","S&T","personal","Medical","RPF","Optg"],
+            datasets: [
+                {
+                    label: "Special Letter",
+                    data: [0,0,0,0,1,1,1,0,0,0,0,0],
+                    backgroundColor: "rgba(255, 165, 0)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Draft Para",
+                    data: [0,0,0,0,0,1,0,0,0,0,0,0],
+                    backgroundColor: "rgba(255, 0, 0)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Audit Note I",
+                    data: [0,0,0,0,3,0,1,0,0,0,0,0],
+                    backgroundColor: "rgba(160,32,240)",
+                    borderColor: "rgba(255, 206, 86, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Audit Inspection Report I",
+                    data: [2,4,0,0,7,0,2,1,1,0,0,1],
+                    backgroundColor: "rgb(0, 100, 0)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Audit Inspection Report II",
+                    data: [2,2,0,0,10,1,4,1,2,1,1,2],
+                    backgroundColor: "rgba(22, 187, 226, 0.42)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                },
+             
+                {
+                    label: "Audit Note II",
+                    data: [0,0,0,0,6,0,1,0,1,1,0,0],
+                    backgroundColor: "rgba(144, 238, 144)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                }
+
+
+               
+               
+            ]
+        };
+
+        // Create the bar chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'No. of cases'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
